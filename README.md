@@ -27,3 +27,9 @@ http://localhost:3000/api/v2/seed
 ## Stack 
 * MongoDB
 * Nest
+
+# Production Build
+1. Create the new docker image and use
+```
+docker-compose -f docker-compose.prod.yaml up --build
+```

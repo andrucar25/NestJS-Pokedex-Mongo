@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app.module';
 import { MongoExceptionFilter } from './common/filters/mongo-exception.filter';
 
 async function bootstrap() {
@@ -19,6 +20,10 @@ async function bootstrap() {
     })
   );
   app.useGlobalFilters(new MongoExceptionFilter());
-  await app.listen(process.env.PORT ?? 3000);
+  
+  const configService = app.get(ConfigService);
+  const PORT = configService.get<number>('port');
+
+  await app.listen(PORT || 3000);
 }
 bootstrap();
